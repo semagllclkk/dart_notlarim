@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:math';
+import 'Ogrenci.dart';
+
 
 void main(List<String> args) {
   int kenar1 = 3;
@@ -95,6 +97,102 @@ void main(List<String> args) {
       break;
     }
   } while (sayi != -1);
+
+  // lambda fonksiyon: isimsiz fonksiyonlardır
+  Function fonksiyon = (int a, b) {
+    return a + b;
+  }; //(20, 30);
+  //1. kullanım:
+
+  //2. kullanım:
+  fonksiyon(10, 20);
+
+  // lambda fonksiyonlar 2 farklı şekilde tanımlanabilir
+  // 1. fat arrow fonksiyon
+  var f2 = (int a, int b) => print(a + b);
+  // 2. normal fonksiyon
+  var f3 = (int a, int b) {
+    print(a + b);
+  };
+
+  Ogrenci ogrenci1 = Ogrenci(1, "Sema Gül", "Çelik", 18, "Lisans-3");
+  print(ogrenci1.bilgileriGetir());
+
+  // null safety: null safety, null değerlerin neden olduğu hataları önlemek için kullanılır
+  // null safety, değişkenlerin null değer alıp almayacağını belirlemek için kullanılır
+  List <String?> isim = []; // içindeki değer/değerler null olabilir
+  List? <String> isim2 = null; // liste null olabilir
+  List <String?>? isim3 = []; // liste ve içindeki değer/değerler null olabilir
+
+  // !: null check operatörüdür, değişkenin null olmadığını garanti eder
+  // örneğin null olabilecek bir değerin asıl değerinin null olmadığını garanti etmek için kullanılır
+  String? isim4 = "isim";
+  //print(isim4.length); // hata verir, çünkü isim4 null olabilir
+  print(isim4!.length); // hata vermez, çünkü isim4 null olamaz. isim4'ün null olmadığını garanti ettik
+
+
+// map ve list sınıflarına ait fonksiyonları Dart dokümanından daha detaylı inceleyebiliriz, o yüzden burada kullanmadım.
+
+// required parametreli fonksiyon
+// required parametreli fonksiyonlarda tüm parametreler çağırılırken verilmelidir
+// required: fonksiyonun parametrelerinde keyword olarak kullanılır
+int toplam({required int a, required int b}) {
+  return a + b;
+
+}
+// örnek kullanım:
+print(toplam(a: 6, b: 9));
+
+
+// type promotion: değişkenin tipini kontrol edip, o tipe göre işlem yapma
+// null olabilecek tiplere non-nullable gibi davranır
+// örnek:
+String? mesaj;
+if ( DateTime.now().hour < 12) {
+  mesaj = "Günaydın";
+} else {
+  mesaj = "İyi akşamlar";
+}
+print(mesaj.length); // hata vermez, çünkü mesaj null olamaz, bunu yukarıda garanti ettik.
+// şayet else bloğu olmasaydı, mesaj null olabilirdi ve hata verirdi.
+
+//late: geç başlatma için kullanılır
+// değişkenin null olamayacağını ama başlangıçta değer ataması yapılmayacağını, daha sonra atanacağını garanti eder
+late String sehir;
+sehir = "Ankara";
+print(sehir);
+// hata vermez, çünkü sehir değişkeninin null olamayacağını ve daha sonra atanacağını garanti ettik.
+
+//??: null coalescing operatörüdür
+// değişken null ise sağdaki değeri atar
+String? isim5;
+String isim6 = isim5 ?? "İsimsiz";
+print(isim6); // isim5 null olduğu için isim6'ya "İsimsiz" atanır
+// eğer isim5 null olmasaydı, isim6'ya isim5'in değeri atanırdı
+
+//?. : null değilse operatörüdür
+// eğer ifade null değilse ifadenin değerive işlemler, null ise null döner
+
+
+// try-catch: hata yakalama bloğudur
+//şu şekilde kullanılır:
+
+// try, on (opsiyonel), catch ve finally (opsiyonel) bloklarından oluşur
+
+// try bloğunda hata oluşabilecek kodlar yazılır
+
+// on bloğunda spesifik hata türleri yakalanabilir, on bloğu çalışırak catch bloğu çalışmaz
+// on HataTürü catch (e) { ... } şeklinde kullanılır
+
+// catch bloğunda tüm hata türleri yakalanabilir
+
+// finally bloğu her durumda çalışır, hata olsa da olmasa da çalışır.
+
+// throw: hata fırlatma işlemi yapar
+// throw ile özel hata mesajları oluşturulabilir
+
+// rethrow: yakalanan hatayı tekrar fırlatır
+// catch bloğunda kullanılır
 }
 
 int hacimhesapla(int a, int b, int c) {
@@ -117,3 +215,13 @@ int topla2(int a, int b, {int c = 0}) => a + b + c;
 // named parametreler default değer alabilir
 // named parametreler sıralı olmak zorunda değildir, istediğimiz sırada çağırabiliriz
 // named parametreler opsiyonel olduğu için çağırılmazsa default (null) değeri alır
+
+// generic fonksiyon
+double ortalamaHesapla<T extends num>(T a, T b) {
+  return (a + b)/2;
+}
+// T extends num: T tipi num tipinden türemiş bir tip olmalıdır
+// num: int ve double tiplerinin üst sınıfıdır
+
+// db, dosya okuma ve logger kısımlarını eklemedim.
+// asenkron programlamanın tamamını da eklemedim.

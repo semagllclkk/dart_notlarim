@@ -1,0 +1,10 @@
+class GenericStack<T> {
+    List<T> _liste = [];
+
+    push(yeniDeger) {
+        return _liste.add(yeniDeger);
+    }
+    pop() {
+        return _liste.removeLast();
+    }
+}
